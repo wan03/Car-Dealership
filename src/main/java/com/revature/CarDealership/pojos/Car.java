@@ -1,14 +1,27 @@
 package com.revature.CarDealership.pojos;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
 	
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8692202001251557485L;
+
 	private String make;
 	
 	private String model;
 	
 	private String year;
 	
-	private int price;
+	private double price;
+	
+	private String identifier;
+	
+	private String belongsTo;
 
 	public String getMake() {
 		return make;
@@ -34,12 +47,46 @@ public class Car {
 		this.year = year;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
 	public void setPrice(int price) {
 		this.price = price;
 	}
+
+	public String getIdentifier() {
+		
+		identifier = make + model + year;
+		return identifier;
+	}
+	
+	public String getBelongsTo() {
+		return belongsTo;
+	}
+	
+	public void setBelongsTo(String belongsTo) {
+		this.belongsTo = belongsTo;
+	}
+	
+	@Override
+	public String toString() {
+		return make + " " + model + " " + year;
+	}
+	
+	public Car (String make, String model, String year, double price) {
+		super();
+		this.make =make;
+		this.model = model;
+		this.year = year;
+		this.price = price;
+		this.belongsTo = "Dealership";
+	}
+	
+	public Car () {
+		super();
+	}
+
+
 
 }

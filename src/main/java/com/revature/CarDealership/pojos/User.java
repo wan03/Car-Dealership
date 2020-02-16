@@ -1,12 +1,23 @@
 package com.revature.CarDealership.pojos;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6269612208459571405L;
+
 	private String name;
 	
 	private String userName;
 	
 	private String password;
+	
+	private String userType;
+	
+	private String indetifier;
 
 	public String getName() {
 		return name;
@@ -32,4 +43,27 @@ public class User {
 		this.password = password;
 	}
 	
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	
+	public String getIndetifier() {
+		indetifier = this.userName;
+		return indetifier;
+	}
+	
+	public User (String name, String userName, String password, String userType) {
+		super();
+		this.name = name;
+		this.userName = userName;
+		this.password = password;
+		this.userType = userType;
+		
+	}
+
 }
