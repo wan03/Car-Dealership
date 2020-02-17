@@ -2,7 +2,7 @@ package com.revature.CarDealership.DAO;
 
 import com.revature.CarDealership.pojos.User;
 
-public interface LoginDAO {
+public interface UserDAO {
 	
 	public void logIn(User u);
 	

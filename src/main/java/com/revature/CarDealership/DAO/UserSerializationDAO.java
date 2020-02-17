@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 import com.revature.CarDealership.pojos.User;
 
-public class LoginSerializationDAO {
+public class UserSerializationDAO {
 	
 	public void logIn(User u) {
 		
@@ -69,6 +69,9 @@ public class LoginSerializationDAO {
 	}
 	
 	public void removeUser (User u) {
+		
 	}
+	
+	
 
 }

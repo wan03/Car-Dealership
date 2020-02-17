@@ -3,7 +3,7 @@ package driver;
 import java.util.Scanner;
 
 import com.revature.CarDealership.DAO.CarSerializationDAO;
-import com.revature.CarDealership.DAO.LoginSerializationDAO;
+import com.revature.CarDealership.DAO.UserSerializationDAO;
 import com.revature.CarDealership.pojos.Car;
 import com.revature.CarDealership.pojos.Customer;
 import com.revature.CarDealership.pojos.Employee;
@@ -18,16 +18,7 @@ public class TerminalDriver {
         
         
         determineUserType(start);
-        
-//        System.out.print("Enter your name: ");
-//        
-//        System.out.println("Name: ");           
-//        System.out.print("Enter your age: ");  
-//        int i = start.nextInt();  
-//        System.out.println("Age: " + i);  
-//        System.out.print("Enter your salary: ");  
-//        double d = start.nextDouble();  
-//        System.out.println("Salary: " + d);         
+      
         start.close();           
         } 
 	
@@ -88,7 +79,7 @@ public class TerminalDriver {
 	
 	public static void createUser (Scanner scan, String userType) {
 		
-		System.out.println("Answer the questions to create a new user");
+		System.out.println("Answer the following questions to create a new user");
 		System.out.println("What is your name?");
 		String name = scan.next();
 		System.out.println("What is your username?");
@@ -99,12 +90,12 @@ public class TerminalDriver {
 		if (userType.equalsIgnoreCase("c")) {
 			
 			Customer newCustomer = new Customer(name, username, password); 
-			LoginSerializationDAO.addUser(newCustomer);
+			UserSerializationDAO.addUser(newCustomer);
 			
 		} else if (userType.equalsIgnoreCase("e")) {
 			
 			Employee newEmployee = new Employee(name, username, password);					
-			LoginSerializationDAO.addUser(newEmployee);
+			UserSerializationDAO.addUser(newEmployee);
 			
 		}		
 		

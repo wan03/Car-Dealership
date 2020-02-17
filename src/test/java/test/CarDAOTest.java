@@ -35,5 +35,16 @@ public class CarDAOTest {
 		assertEquals("Check if make is correct", "Ford", testCar.getMake());
 		
 	}
+	
+	@Test
+	public void changeCarOwnershipTest () {
+		
+		CarSerializationDAO.changeCarOwnership("FordFusion2018", "Test1");
+		
+		Car testCar = CarSerializationDAO.readCar("FordFusion2018");
+		
+		assertEquals("Check if make is correct", "Test1", testCar.getBelongsTo());
+		
+	}
  
 }

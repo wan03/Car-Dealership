@@ -71,7 +71,8 @@ public class Car implements Serializable {
 	
 	@Override
 	public String toString() {
-		return make + " " + model + " " + year;
+		String p = String.valueOf(price);
+		return make + " " + model + " " + year + " " + p;
 	}
 	
 	public Car (String make, String model, String year, double price) {

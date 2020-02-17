@@ -89,6 +89,54 @@ public static Car readCar(String identifier) {
 		
 	}
 	
+	public String getAllCars() {
+		
+		//TODO not sure how to do this
+		
+		return null;
+	}
+	
+	public static void changeCarOwnership (String identifier, String userName) {
+		
+		String filename;
+		filename = identifier + ".dat";
+		Car b = null;
+		try (FileInputStream fis = new FileInputStream(filename); ObjectInputStream ois = new ObjectInputStream(fis);) { //try with resources 
+			b = (Car) ois.readObject();
+			b.setBelongsTo(userName);
+			FileOutputStream fos = null;
+			ObjectOutputStream oos = null;
+			try {
+				fos = new FileOutputStream(filename);
+				oos = new ObjectOutputStream(fos);
+				oos.writeObject(b);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					oos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				try {
+					fos.close();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 
 }
