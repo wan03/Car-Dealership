@@ -2,7 +2,7 @@ package com.revature.CarDealership.pojos;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class User extends Users implements Serializable {
 	
 	/**
 	 * 
@@ -64,6 +64,24 @@ public class User implements Serializable {
 		this.password = password;
 		this.userType = userType;
 		
+	}
+	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public boolean equals (Object object) {
+	    boolean result = false;
+	    if (object == null || object.getClass() != getClass()) {
+	        result = false;
+	    } else {
+	        User user = (User) object;
+	        if (this.userName.equals(user.getUserName())) {
+	            result = true;
+	        }
+	    }
+	    return result;
 	}
 
 }

@@ -1,8 +1,10 @@
 package com.revature.CarDealership.pojos;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Car implements Serializable {
+public class Car extends Automobiles implements Serializable {
 	
 
 
@@ -19,9 +21,23 @@ public class Car implements Serializable {
 	
 	private double price;
 	
+	private String vin;
+	
 	private String identifier;
 	
 	private String belongsTo;
+	
+	private HashMap<String, Integer> offers = new HashMap<String, Integer>();
+	
+	private Payment payment;
+	
+	public Payment getPayments() {
+		return payment;
+	}
+	
+	public void setPayments(int months, int payment) {
+		this.payment = new Payment(months, payment);
+	}
 
 	public String getMake() {
 		return make;
@@ -57,7 +73,7 @@ public class Car implements Serializable {
 
 	public String getIdentifier() {
 		
-		identifier = make + model + year;
+		identifier = getVin();
 		return identifier;
 	}
 	
@@ -72,20 +88,53 @@ public class Car implements Serializable {
 	@Override
 	public String toString() {
 		String p = String.valueOf(price);
-		return make + " " + model + " " + year + " " + p;
+		return make + " " + model + " " + year + " " + p + vin;
 	}
 	
-	public Car (String make, String model, String year, double price) {
+	public Car (String make, String model, String year, double price, String vin) {
 		super();
 		this.make =make;
 		this.model = model;
 		this.year = year;
 		this.price = price;
+		this.vin = vin;
 		this.belongsTo = "Dealership";
+		this.offers.put("none", 0);
 	}
 	
 	public Car () {
 		super();
+	}
+
+	public String getVin() {
+		return vin;
+	}
+
+	public void setVin(String vin) {
+		this.vin = vin;
+	}
+	
+	@Override
+	public boolean equals (Object object) {
+	    boolean result = false;
+	    if (object == null || object.getClass() != getClass()) {
+	        result = false;
+	    } else {
+	        Car car = (Car) object;
+	        if (this.vin.equals(car.getVin())) {
+	            result = true;
+	        }
+	    }
+	    return result;
+	}
+
+	public HashMap<String, Integer> getOffers() {
+		return offers;
+	}
+
+	public void addOffers(String userName, int offer) {
+		
+		this.offers.put(userName, offer);
 	}
 
 

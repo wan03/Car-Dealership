@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 
 
 import com.revature.CarDealership.pojos.User;
+import com.revature.CarDealership.pojos.Users;
 
 public class UserSerializationDAO {
 	
@@ -20,16 +21,21 @@ public class UserSerializationDAO {
 		
 	}	
 	
-	public static void addUser (User u) {
+	public void addUser (User u) {
 		
-		String filename;
-		filename = u.getIndetifier() + ".dat";
+		String filename = "users.dat";
+		Users users = readAllUsers();
+		
+		if (!users.contains(u)) {
+			
+			users.add(u);
+		}
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
 			fos = new FileOutputStream(filename);
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(u);
+			oos.writeObject(users);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -50,13 +56,13 @@ public class UserSerializationDAO {
 		
 	}
 	
-	public static User readUser (String identifier){
+	public Users readAllUsers (){
 		
 		String filename;
-		filename = identifier + ".dat";
-		User b = null;
+		filename = "users.dat";
+		Users b = null;
 		try (FileInputStream fis = new FileInputStream(filename); ObjectInputStream ois = new ObjectInputStream(fis);) { //try with resources 
-			b = (User) ois.readObject();
+			b = (Users) ois.readObject();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -69,6 +75,37 @@ public class UserSerializationDAO {
 	}
 	
 	public void removeUser (User u) {
+		
+		String filename;
+		filename = "users.dat";
+		Users users = readAllUsers();
+		if (users.contains(u)) {
+			
+			users.remove(u);
+		}
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		try {
+			fos = new FileOutputStream(filename);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(users);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				fos.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	

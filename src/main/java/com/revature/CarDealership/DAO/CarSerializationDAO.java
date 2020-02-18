@@ -7,20 +7,26 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import com.revature.CarDealership.pojos.Automobiles;
 import com.revature.CarDealership.pojos.Car;
 
 public class CarSerializationDAO {
 	
-	public static void addCar(Car c) {
+	public void addCar(Car c) {
 		
-		String filename;
-		filename = c.getIdentifier() + ".dat";
+			
+		Automobiles cars = readAllCars();
+		if(!cars.contains(c)) {
+			
+			cars.add(c);		
+		}
+		String filename = "cars.dat";
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
 			fos = new FileOutputStream(filename);
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(c);
+			oos.writeObject(cars);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -41,34 +47,39 @@ public class CarSerializationDAO {
 		
 	}
 	
-public static Car readCar(String identifier) {
-		
-		String filename;
-		filename = identifier + ".dat";
-		Car b = null;
-		try (FileInputStream fis = new FileInputStream(filename); ObjectInputStream ois = new ObjectInputStream(fis);) { //try with resources 
-			b = (Car) ois.readObject();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return b;
+
+public Automobiles readAllCars() {
+	
+	String filename;
+	filename = "cars.dat";
+	Automobiles b = null;
+	try (FileInputStream fis = new FileInputStream(filename); ObjectInputStream ois = new ObjectInputStream(fis);) { //try with resources 
+		b = (Automobiles) ois.readObject();
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	} catch (ClassNotFoundException e) {
+		e.printStackTrace();
 	}
+	return b;
+}
 	
 	// TODO This doesn't work yet, don't know how to remove a file.
 	public void removeCar (Car c) {
 		
-		String filename;
-		filename = c.getIdentifier() + ".dat";
+		Automobiles cars = readAllCars();
+		if (cars.contains(c)) {
+			
+			cars.remove(c);		
+		}
+		String filename = "cars.dat";
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		try {
 			fos = new FileOutputStream(filename);
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(c);
+			oos.writeObject(cars);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -81,6 +92,7 @@ public static Car readCar(String identifier) {
 			}
 			try {
 				fos.close();
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -88,51 +100,35 @@ public static Car readCar(String identifier) {
 		
 		
 	}
+
 	
-	public String getAllCars() {
+	public void changeCarOwnership (Car car, String userName) {
 		
-		//TODO not sure how to do this
-		
-		return null;
-	}
-	
-	public static void changeCarOwnership (String identifier, String userName) {
-		
-		String filename;
-		filename = identifier + ".dat";
-		Car b = null;
-		try (FileInputStream fis = new FileInputStream(filename); ObjectInputStream ois = new ObjectInputStream(fis);) { //try with resources 
-			b = (Car) ois.readObject();
-			b.setBelongsTo(userName);
-			FileOutputStream fos = null;
-			ObjectOutputStream oos = null;
-			try {
-				fos = new FileOutputStream(filename);
-				oos = new ObjectOutputStream(fos);
-				oos.writeObject(b);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					oos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				try {
-					fos.close();
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+		Automobiles cars = readAllCars();
+		cars.changeOwnership(car, userName);		
+		String filename = "cars.dat";
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+		try {
+			fos = new FileOutputStream(filename);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(cars);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		} finally {
+			try {
+				oos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				fos.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
