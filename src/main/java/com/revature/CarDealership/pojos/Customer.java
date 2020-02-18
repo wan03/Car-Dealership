@@ -18,18 +18,9 @@ public class Customer extends User {
 		this.setUserName(userName);
 		this.setPassword(password);
 		this.setUserType("customer");
-		this.addPayments(0, 0);
 	}
 
-	private HashMap <Integer, Integer> payments = new HashMap<Integer, Integer>();
-	
-	public HashMap <Integer, Integer> getPayments() {
-		return payments;
-	}
 
-	public void addPayments(Integer months, Integer payment) {
-		this.payments.put(months, payment);
-	}
 	
 	
 
