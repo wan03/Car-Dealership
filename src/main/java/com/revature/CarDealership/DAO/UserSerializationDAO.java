@@ -13,14 +13,7 @@ import com.revature.CarDealership.pojos.Users;
 
 public class UserSerializationDAO {
 	
-	public void logIn(User u) {
-		
-	}
-	
-	public void logOut(User u) {
-		
-	}	
-	
+
 	public void addUser (User u) {
 		
 		String filename = "users.dat";

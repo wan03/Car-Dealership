@@ -8,24 +8,12 @@ import com.revature.CarDealership.DAO.UserSerializationDAO;
 import com.revature.CarDealership.pojos.Customer;
 import com.revature.CarDealership.pojos.Employee;
 import com.revature.CarDealership.pojos.User;
+import com.revature.CarDealership.pojos.Users;
 
 public class UserDAOTest {
 	
 	UserSerializationDAO DAO = new UserSerializationDAO();
 
-	@Test
-	public void logInTest() {
-		
-		
-		
-	}
-	
-	@Test
-	public void logOutTest() {
-		
-		
-		
-	}
 	
 	@Test
 	public void addCustomerTest() {
@@ -33,9 +21,9 @@ public class UserDAOTest {
 		Customer testCustomer = new Customer("Test", "TestCustomer", "testing");
 		
 		DAO.addUser(testCustomer);
-		//not sure how to test that this completed other than verifying the the file name exists which will be itself
-				// a test of a different part.
-		assertEquals("Check object was created and code reached here", testCustomer, testCustomer);
+		
+		Users allUsers = DAO.readAllUsers();
+		assertTrue(allUsers.contains(testCustomer));
 		
 		
 	}
@@ -46,34 +34,34 @@ public class UserDAOTest {
 		Employee testEmployee = new Employee("Test", "TestEmployee", "testing");
 		
 		DAO.addUser(testEmployee);
-		//not sure how to test that this completed other than verifying the the file name exists which will be itself
-				// a test of a different part.
-		assertEquals("Check object was created and code reached here", testEmployee, testEmployee);
 		
+		Users allUsers = DAO.readAllUsers();
 		
-	}
-	
-	@Test
-	public void readCustomerTest() {
-		
-		//User testCustomer = UserSerializationDAO.readUser("TestCustomer");
-		
-		//Per my comment above this also tests that the previous one worked correctly. 
-		//assertEquals("Check if user type is correct", "customer", testCustomer.getUserType());
-		
+			
+		assertTrue(allUsers.contains(testEmployee));
 		
 	}
 	
 	@Test
-	public void readEmployeeTest() {
+	public void removeUserTest () {
 		
-		//User testEmployee = UserSerializationDAO.readUser("TestEmployee");
-		//Per my comment above this also tests that the previous one worked correctly. 
-		//assertEquals("Check if user type is correct", "employee", testEmployee.getUserType());
 		
+		Users allUsers = DAO.readAllUsers();
+		
+		for (User u : allUsers) {
+			
+			if (u.getUserName().equalsIgnoreCase("TestEmployee")) {
+				DAO.removeUser(u);
+				Users updatedUsers = DAO.readAllUsers();
+				assertFalse(updatedUsers.contains(u));
+			}
+			
+		}
 		
 		
 		
 	}
+	
+
 
 }

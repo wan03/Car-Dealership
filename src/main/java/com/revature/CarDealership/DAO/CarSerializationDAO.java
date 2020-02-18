@@ -14,12 +14,12 @@ public class CarSerializationDAO {
 	
 	public void addCar(Car c) {
 		
-			
+		
 		Automobiles cars = readAllCars();
-		if(!cars.contains(c)) {
-			
+		if(cars.contains(c)) {
+			cars.remove(c);
 			cars.add(c);		
-		}
+		} else { cars.add(c);}
 		String filename = "cars.dat";
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;

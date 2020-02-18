@@ -88,7 +88,7 @@ public class Car extends Automobiles implements Serializable {
 	@Override
 	public String toString() {
 		String p = String.valueOf(price);
-		return make + " " + model + " " + year + " " + p + vin;
+		return make + " " + model + " " + year + " " + p + " " + vin;
 	}
 	
 	public Car (String make, String model, String year, double price, String vin) {
@@ -133,8 +133,11 @@ public class Car extends Automobiles implements Serializable {
 	}
 
 	public void addOffers(String userName, int offer) {
-		
-		this.offers.put(userName, offer);
+		offers.put(userName, offer);
+	}
+	
+	public void removeOffers() {
+		offers.clear();
 	}
 
 

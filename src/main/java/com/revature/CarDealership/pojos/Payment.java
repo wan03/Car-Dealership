@@ -1,7 +1,14 @@
 package com.revature.CarDealership.pojos;
 
-public class Payment {
+import java.io.Serializable;
+
+public class Payment implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7449945184886321299L;
+
 	private int months;
 	
 	private int payment;

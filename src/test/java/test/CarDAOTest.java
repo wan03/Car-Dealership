@@ -15,7 +15,7 @@ public class CarDAOTest {
 	public void addCarTest() {
 		
 		
-		Car ford = new Car("Ford", "Fusion", "2018", 15000.00, "JH4KA7570NC035422");
+		Car ford = new Car("Mercedes Benz", "C300", "2017", 18000.00, "1FVAC4CV89HAG9773");
 		
 		
 		DAO.addCar(ford);
@@ -29,17 +29,7 @@ public class CarDAOTest {
 		
 	}
 	
-	@Test
-	public void readCarTest () {
-		
-		
-		
-		//Don't need this test right now.
-		
-	
-		
-	}
-	
+
 	@Test
 	public void changeCarOwnershipTest () {
 		
@@ -52,6 +42,30 @@ public class CarDAOTest {
 		currentCar = allCars.get(0);
 		
 		assertEquals("Check if make is correct", "Test1", currentCar.getBelongsTo());
+		
+	}
+	
+	@Test
+	public void removeCarTest() {
+		
+		
+		String vin = "1FVAC4CV89HAG9773";
+			
+		Automobiles allCars = DAO.readAllCars();
+		
+		Car carRemove = new Car();
+		
+		for (Car car : allCars) {
+			
+			if (car.getVin().equalsIgnoreCase(vin)) {
+				DAO.removeCar(car);
+			}
+		}
+		
+		Automobiles newAllCars = DAO.readAllCars();
+		
+		assertFalse(newAllCars.contains(carRemove));
+		
 		
 	}
  

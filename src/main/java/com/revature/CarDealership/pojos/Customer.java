@@ -1,8 +1,5 @@
 package com.revature.CarDealership.pojos;
 
-import java.util.HashMap;
-import java.util.List;
-
 //import com.revature.CarDealership.DAO.CarSerializationDAO;
 
 public class Customer extends User {

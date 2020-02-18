@@ -87,16 +87,15 @@ public class TerminalDriver {
 		String userName = scan.next();
 		System.out.println("Please enter your password");
 		String password = scan.next();
-		User user = new User();
 		
 		
-		for (int i = 0; i < users.size(); i++) {
+		for (User user : users) {		
 			
-			user = users.get(i);
 			
+					
 			if (user.getUserName().equalsIgnoreCase(userName)) {
 				
-				if (user.getPassword().equals(password)){
+				if (user.getPassword().equalsIgnoreCase(password)){
 					
 					if (userType.equals("c")) {
 						
@@ -111,12 +110,10 @@ public class TerminalDriver {
 					loginProcedure(scan, users, cars, userType);
 				}
 				
-			} else {
-				System.out.println("Sorry, wrong username or password");
-				loginProcedure(scan, users, cars, userType);
+			} 
 			}
 			
-		}
+		
 		
 				
 	}
@@ -135,11 +132,13 @@ public class TerminalDriver {
 			
 			Customer newCustomer = new Customer(name, username, password); 
 			userDAO.addUser(newCustomer);
+			loginProcedure(scan, users, cars, userType);
 			
 		} else if (userType.equalsIgnoreCase("e")) {
 			
 			Employee newEmployee = new Employee(name, username, password);					
 			userDAO.addUser(newEmployee);
+			loginProcedure(scan, users, cars, userType);
 			
 		}		
 		
@@ -160,6 +159,7 @@ public class TerminalDriver {
 				
 				System.out.println(car + "\n");
 			}
+			actionsCustomer(scan, users, cars, user);
 			
 			break;
 		case "mf": 
@@ -177,11 +177,10 @@ public class TerminalDriver {
 					
 					System.out.println("Make: " + car.getMake() + " Model: " + car.getModel() + " Year: " + car.getYear()  + "\n");
 					actionsCustomer(scan, users, cars, user);
-				} else {
-					System.out.println("You currently dont own any cars");
-					actionsCustomer(scan, users, cars, user);
-				}
+				} 
 			}
+			System.out.println("You currently dont own any cars");
+			actionsCustomer(scan, users, cars, user);
 			break;
 		case "vp":
 			for (Car car : cars) {
@@ -189,18 +188,19 @@ public class TerminalDriver {
 				if (car.getBelongsTo().equals(user.getUserName())) {
 					
 					Payment payments = car.getPayments();
-					System.out.println("Make: " + car.getMake() + " Model: " + car.getModel() + " Remaining Paymets: " + payments.getMonths() + " months" + "Monthly Payment: $" + payments.getPaymentAmount()  + "\n");
+					System.out.println("Make: " + car.getMake() + " Model: " + car.getModel() + " Remaining Paymets: " + payments.getMonths() + " months" + " Monthly Payment: $" + payments.getPaymentAmount()  + "\n");
 					actionsCustomer(scan, users, cars, user);
-				} else {
-					System.out.println("You currently dont own any cars");
-					actionsCustomer(scan, users, cars, user);
-				}
+				} 
 			}
+			System.out.println("You currently dont own any cars");
+			actionsCustomer(scan, users, cars, user);
 			break;
 		case "exit":
 			scan.close();
+			break;
 		default:
 			System.out.println("Try again");
+			actionsCustomer(scan, users, cars, user);
 		}
 		
 		
@@ -222,12 +222,12 @@ public class TerminalDriver {
 			
 			if (car.getVin().equalsIgnoreCase(vin)) {
 				car.addOffers(user.getUserName(), offer);
+				carDAO.addCar(car);
 				actionsCustomer(scan, users, cars, user);
-			} else {
-				System.out.println("Incorrect VIN number");
-				makeOffer(scan, users, cars, user);
-			}
+			} 
 		}
+		System.out.println("Incorrect VIN number");
+		makeOffer(scan, users, cars, user);
 		
 	}
 
@@ -283,16 +283,22 @@ switch (action) {
 			
 			for (Car car : cars) {
 				
+				if (car.getPayments() != null) {
+					
 			Payment payments = car.getPayments();
-			System.out.println("Make: " + car.getMake() + " Model: " + car.getModel() + " Remaining Paymets: " + payments.getMonths() + " months" + "Monthly Payment: $" + payments.getPaymentAmount()  + "\n");
-			
-			} 
+			System.out.println("Make: " + car.getMake() + " Model: " + car.getModel() + " Remaining Paymets: " + payments.getMonths() + " months" + " Monthly Payment: $" + payments.getPaymentAmount()  + "\n");
+			actionsEmployee(scan, users, cars, user);
+			} 			 
+			}
+			actionsEmployee(scan, users, cars, user);
 			
 			break;
 		case "exit":
 			scan.close();
+			break;
 		default:
 			System.out.println("Try again");
+			actionsEmployee(scan, users, cars, user);
 		}
 		
 	}
@@ -317,21 +323,21 @@ switch (action) {
 				
 			}
 			
-			System.out.println("Do you want to accept an offer? (y or n)");
-			String res = scan.next();
-			
-			if (res.equalsIgnoreCase("y")) {
-				System.out.println("Please enter VIN");
-				String vin = scan.next();
-				System.out.println("Please enter customer");{
-				String userName = scan.next();
-				handlePurchase(scan, users, cars, user, vin, userName);
-				}
-			} else {
-				actionsEmployee(scan, users, cars, user);
-			}
 		}
 		
+		System.out.println("Do you want to accept an offer? (y or n)");
+		String res = scan.next();
+		
+		if (res.equalsIgnoreCase("y")) {
+			System.out.println("Please enter VIN");
+			String vin = scan.next();
+			System.out.println("Please enter customer");{
+				String userName = scan.next();
+				handlePurchase(scan, users, cars, user, vin, userName);
+			}
+		} else {
+			actionsEmployee(scan, users, cars, user);
+		}
 	}
 
 	private static void handlePurchase(Scanner scan, Users users, Automobiles cars, User user, String vin, String userName) {
@@ -346,7 +352,9 @@ switch (action) {
 				Integer offer = offers.get(userName);
 				int payment = offer/60;
 				
-				car.setPayments(60, payment);
+				car.setPayments(60, payment);			
+				car.removeOffers();
+				carDAO.addCar(car);
 				
 				
 			}
