@@ -6,15 +6,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Logger;
 
 import com.revature.CarDealership.pojos.Automobiles;
 import com.revature.CarDealership.pojos.Car;
 
 public class CarSerializationDAO {
 	
+	private static final Logger Log = Logger.getLogger("CarSerializationDAO");
+	
 	public void addCar(Car c) {
 		
-		
+		Log.info("Car added");
 		Automobiles cars = readAllCars();
 		if(cars.contains(c)) {
 			cars.remove(c);
@@ -67,7 +70,7 @@ public Automobiles readAllCars() {
 	
 	// TODO This doesn't work yet, don't know how to remove a file.
 	public void removeCar (Car c) {
-		
+		Log.info("Car removed");
 		Automobiles cars = readAllCars();
 		if (cars.contains(c)) {
 			
@@ -103,7 +106,7 @@ public Automobiles readAllCars() {
 
 	
 	public void changeCarOwnership (Car car, String userName) {
-		
+		Log.info("Owner changed");
 		Automobiles cars = readAllCars();
 		cars.changeOwnership(car, userName);		
 		String filename = "cars.dat";

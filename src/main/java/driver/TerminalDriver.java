@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import com.revature.CarDealership.DAO.CarSerializationDAO;
 import com.revature.CarDealership.DAO.UserSerializationDAO;
@@ -19,8 +20,10 @@ public class TerminalDriver {
 	
 	static CarSerializationDAO carDAO = new CarSerializationDAO();
 	static UserSerializationDAO userDAO = new UserSerializationDAO();
+	private static final Logger Log = Logger.getLogger("TerminalDriver");
 		
-	public static void main(String args[]){                       
+	public static void main(String args[]){ 
+		Log.info("System Started");
         String s = "Hello, thank you for visiting our dealer.";  
         Scanner scan = new Scanner(s);  
         scan.close();           
@@ -98,7 +101,7 @@ public class TerminalDriver {
 				if (user.getPassword().equalsIgnoreCase(password)){
 					
 					if (userType.equals("c")) {
-						
+						Log.info(user + "Has logged in");
 						actionsCustomer(scan, users, cars, user);
 						
 					} else if (userType.equals("e")) {
@@ -223,6 +226,7 @@ public class TerminalDriver {
 			if (car.getVin().equalsIgnoreCase(vin)) {
 				car.addOffers(user.getUserName(), offer);
 				carDAO.addCar(car);
+				Log.info(user + " made and offer on " + car.getVin());
 				actionsCustomer(scan, users, cars, user);
 			} 
 		}
@@ -318,7 +322,7 @@ switch (action) {
 					Map.Entry offer = (Map.Entry)it.next();
 					amount = (int) offer.getValue();
 					cust = (String) offer.getKey();
-					System.out.println("VIN: " + car.getVin() + " Offer: $" + amount  + " Customer: "+ cust + "\n");
+					Log.info(user + "Has accepted the offer for VIN: " + car.getVin() + " Offer: $" + amount  + " Customer: "+ cust + "\n");
 				}
 				
 			}
@@ -347,7 +351,7 @@ switch (action) {
 			if(car.getVin().equals(vin)) {
 				
 				car.setBelongsTo(userName);
-				
+				Log.info(userName + "Has puchased " + car.getVin());
 				HashMap<String, Integer> offers = car.getOffers();
 				Integer offer = offers.get(userName);
 				int payment = offer/60;
