@@ -15,7 +15,7 @@ public class CarDAOTest {
 	public void addCarTest() {
 		
 		
-		Car ford = new Car("Mercedes Benz", "C300", "2017", 18000.00, "1FVAC4CV89HAG9773");
+		Car ford = new Car("Ford", "Edge", "2017", 12000.00, "JH4CC2540NC006770");
 		
 		
 		DAO.addCar(ford);
@@ -49,7 +49,7 @@ public class CarDAOTest {
 	public void removeCarTest() {
 		
 		
-		String vin = "1FVAC4CV89HAG9773";
+		String vin = "JH4CC2540NC006770";
 			
 		Automobiles allCars = DAO.readAllCars();
 		
@@ -59,6 +59,7 @@ public class CarDAOTest {
 			
 			if (car.getVin().equalsIgnoreCase(vin)) {
 				DAO.removeCar(car);
+				carRemove = car;
 			}
 		}
 		

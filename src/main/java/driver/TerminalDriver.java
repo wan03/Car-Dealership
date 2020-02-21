@@ -25,7 +25,8 @@ public class TerminalDriver {
 	public static void main(String args[]){ 
 		Log.info("System Started");
         String s = "Hello, thank you for visiting our dealer.";  
-        Scanner scan = new Scanner(s);  
+        Scanner scan = new Scanner(s);
+        System.out.println(s);
         scan.close();           
         Scanner start = new Scanner(System.in);  
         Automobiles cars = carDAO.readAllCars();
@@ -101,7 +102,7 @@ public class TerminalDriver {
 				if (user.getPassword().equalsIgnoreCase(password)){
 					
 					if (userType.equals("c")) {
-						Log.info(user + "Has logged in");
+						Log.info(user.getUserName() + " has logged in");
 						actionsCustomer(scan, users, cars, user);
 						
 					} else if (userType.equals("e")) {
@@ -322,7 +323,7 @@ switch (action) {
 					Map.Entry offer = (Map.Entry)it.next();
 					amount = (int) offer.getValue();
 					cust = (String) offer.getKey();
-					Log.info(user + "Has accepted the offer for VIN: " + car.getVin() + " Offer: $" + amount  + " Customer: "+ cust + "\n");
+					System.out.println("Make: " + car.getMake() + " Model: " + car.getModel() + " VIN: " + car.getVin() + " Offer: $" + amount  + " Customer: "+ cust);
 				}
 				
 			}
@@ -337,6 +338,7 @@ switch (action) {
 			String vin = scan.next();
 			System.out.println("Please enter customer");{
 				String userName = scan.next();
+				Log.info(user.getUserName() + "Has accepted the offer for VIN: " + vin + " From: " + userName);
 				handlePurchase(scan, users, cars, user, vin, userName);
 			}
 		} else {
